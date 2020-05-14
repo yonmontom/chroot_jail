@@ -1,4 +1,9 @@
 ---
+- name: create chroot group
+  group:
+    name: "{{ chroot_group }}"
+    state: present
+    system: yes
 - name: create chroot user
   user:
     name: "{{ chroot_user }}"
@@ -8,11 +13,6 @@
     state: present
     update_password: on_create
     group: "{{ chroot_group }}"
-- name: create chroot group
-  group:
-    name: "{{ chroot_group }}"
-    state: present
-    system: yes
 - name: create chroot jail home directory and sub directories
   file:
     path: "{{ item }}"
