@@ -7,7 +7,7 @@
 - name: create chroot user
   user:
     name: "{{ chroot_user }}"
-    password: test1234
+    password: $6$mysecretsalt$qJbapG68nyRab3gxvKWPUcs2g3t0oMHSHMnSKecYNpSi3CuZm.GbBqXO8BE6EI6P1JUefhA0qvD7b5LSh./PU1
     shell: /bin/bash
     home: "{{ chroot_home }}"
     state: present
