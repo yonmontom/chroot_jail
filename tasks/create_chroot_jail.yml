@@ -4,77 +4,92 @@
     name: "{{ chroot_group }}"
     state: present
     system: yes
+
 - name: create chroot user
   user:
     name: "{{ chroot_user }}"
-    password: $6$mysecretsalt$qJbapG68nyRab3gxvKWPUcs2g3t0oMHSHMnSKecYNpSi3CuZm.GbBqXO8BE6EI6P1JUefhA0qvD7b5LSh./PU1
-    shell: /bin/bash
+    password: b878c9fb5e98af0c1d38b01f5e5330b0
+    shell: "{{ chroot_home }}/bin/bash"
     home: "{{ chroot_home }}"
     state: present
     group: "{{ chroot_group }}"
+
 - name: create chroot jail home directory and sub directories
   file:
     path: "{{ item }}"
     state: directory
     owner: root
     group: root
-    mode: 771
+    mode: 777
   with_items:
     - "{{ chroot_home }}"
     - "{{ chroot_home }}/etc/"
     - "{{ chroot_home }}/bin/"
     - "{{ chroot_home }}/lib64/"
     - "{{ chroot_home }}/dev/"
+
 - name: Run mknode commands for null
   command:
     chdir: "{{ chroot_home }}/dev/"
     cmd: mknod -m 666 null c 1 4
+
 - name: Run mknode commands for tty
   command:
     chdir: "{{ chroot_home }}/dev/"
     cmd: mknod -m 666 tty c 5 0
+
 - name: Run mknode commands for null
   command:
     chdir: "{{ chroot_home }}/dev/"
     cmd: mknod -m 666 zero c 1 5
+
 - name: Run mknode commands for null
   command:
     chdir: "{{ chroot_home }}/dev/"
     cmd: mknod -m 666 random c 1 8
+
 - name: copy command binaries to chroot folder.
   copy:
     src: "{{ item }}"
     dest: "{{ chroot_home }}/bin/"
     remote_src: yes
+    mode: 0755
   with_items:
     - "{{ command_list }}"
-- name: copy command libaries to chroot lib64 folder (centos 6)
+
+- name: copy command libs to chroot lib64 folder (centos 6)
   copy:
     src: "{{ item }}"
     dest: "{{ chroot_home }}/lib64/"
     owner: root
     group: root
     remote_src: yes
+    mode: 0777
   with_items:
-    - "{{ centos6_list }}"
+    - "{{ centos6_libs }}"
   when:
     -  (ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "6")
-- name: copy command libaries to chroot lib64 folder (centos 6)
+
+- name: copy command libs to chroot lib64 folder (centos 7)
   copy:
     src: "{{ item }}"
     dest: "{{ chroot_home }}/lib64/"
     owner: root
     group: root
     remote_src: yes
+    mode: 0777
   with_items:
-    - "{{ centos7_list }}"
+    - "{{ centos7_libs }}"
   when:
     - (ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7")
+
 - name: copy passwd to chroot jail
   copy:
     src: /etc/passwd
     dest: "{{ chroot_home }}/etc/"
     remote_src: yes
+    mode: 0644
+
 - name: set chroot jail in sshd config
   blockinfile:
     path: /etc/ssh/sshd_config

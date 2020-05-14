@@ -10,7 +10,7 @@ command_list:
   - /bin/less
   - /bin/cat
 
-centos6_list:
+centos6_libs:
   - /lib64/libselinux.so.1
   - /lib64/librt/so.1
   - /lib64/libacl.so.1
@@ -21,7 +21,7 @@ centos6_list:
   - /lib64/libattr.so.1
   - /lib64/libpcre.so.0
 
-centos7_list:
+centos7_libs:
   - /lib64/libselinux.so.1
   - /lib64/libcap.so.2
   - /lib64/libacl.so.1
