@@ -1,74 +1,71 @@
 ---
-- hosts: rtp-server-qa
-  become: yes
-  tasks:
-    - name: create chroot jail home directory and sub directories
-      file:
-        path: "{{ item }}"
-        state: directory
-        owner: root
-        group: root
-        mode: 771
-      with_items:
-        - "{{ chroot_home }}"
-        - "{{ chroot_home }}/etc/"
-        - "{{ chroot_home }}/bin/"
-        - "{{ chroot_home }}/lib64/"
-        - "{{ chroot_home }}/dev/"
-    - name: Run mknode commands for null, tty, zero and random
-      command:
-        chdir: "{{ chroot_home }}/dev/"
-        cmd: mknode -m 666 "{{ item }}"
-      with_items:
-        - null c 1 3
-        - tty c 5 0
-        - zero c 1 5
-        - random c 1 8
-    - name: copy command binaries to chroot folder.
-      copy:
-        path: "{{ item }}"
-        dest: "{{ chroot_home }}/bin/"
-      with_items:
-        - "{{ command_list }}"
-    - name: copy command libaries to chroot lib64 folder (centos 6)
-      copy:
-        path: "{{ item }}"
-        dest: "{{ chroot_home }}/lib64/"
-        state: present
-        owner: "{{ chroot_user }}"
-        group: "{{ chroot_group }}"
-      with_items:
-        - "{{ centos6_list }}"
-      when:
-        - (ansible_facts['distribrution'] == 'CentOS' and ansible_facts['distribution_major_version'] == '6')
-    - name: copy command libaries to chroot lib64 folder (centos 6)
-      copy:
-        path: "{{ item }}"
-        dest: "{{ chroot_home }}/lib64/"
-        state: present
-        owner: "{{ chroot_user }}"
-        group: "{{ chroot_group }}"
-      with_items:
-        - "{{ centos7_list }}"
-      when:
-        - (ansible_facts['distribrution'] == 'CentOS' and ansible_facts['distribution_major_version'] == '7')
-    - name: create chroot group
-      group:
-        name: "{{ chroot_group }}"
-        state: present
-        system: yes
-    - name: create chroot user
-      user:
-        name: "{{ chroot_user }}"
-        password:
-        shell: /bin/bash
-        create_home: yes
-        state: present
-        update_password: on_create
-        group: "{{ chroot_group }}"
-    - name: set chroot jail in sshd config
-      blockinfile:
-        path: /etc/ssh/sshd_config
-        block:
-          Match User "{{ chroot_user}}"
-            chrootDirectory "{{ chroot_home}}"
+- name: create chroot jail home directory and sub directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 771
+  with_items:
+    - "{{ chroot_home }}"
+    - "{{ chroot_home }}/etc/"
+    - "{{ chroot_home }}/bin/"
+    - "{{ chroot_home }}/lib64/"
+    - "{{ chroot_home }}/dev/"
+- name: Run mknode commands for null, tty, zero and random
+  command:
+    chdir: "{{ chroot_home }}/dev/"
+    cmd: mknode -m 666 "{{ item }}"
+  with_items:
+    - null c 1 3
+    - tty c 5 0
+    - zero c 1 5
+    - random c 1 8
+- name: copy command binaries to chroot folder.
+  copy:
+    path: "{{ item }}"
+    dest: "{{ chroot_home }}/bin/"
+  with_items:
+    - "{{ command_list }}"
+- name: copy command libaries to chroot lib64 folder (centos 6)
+  copy:
+    path: "{{ item }}"
+    dest: "{{ chroot_home }}/lib64/"
+    state: present
+    owner: "{{ chroot_user }}"
+    group: "{{ chroot_group }}"
+  with_items:
+    - "{{ centos6_list }}"
+  when:
+    - (ansible_facts['distribrution'] == 'CentOS' and ansible_facts['distribution_major_version'] == '6')
+- name: copy command libaries to chroot lib64 folder (centos 6)
+  copy:
+    path: "{{ item }}"
+    dest: "{{ chroot_home }}/lib64/"
+    state: present
+    owner: "{{ chroot_user }}"
+    group: "{{ chroot_group }}"
+  with_items:
+    - "{{ centos7_list }}"
+  when:
+    - (ansible_facts['distribrution'] == 'CentOS' and ansible_facts['distribution_major_version'] == '7')
+- name: create chroot group
+  group:
+    name: "{{ chroot_group }}"
+    state: present
+    system: yes
+- name: create chroot user
+  user:
+    name: "{{ chroot_user }}"
+    password:
+    shell: /bin/bash
+    create_home: yes
+    state: present
+    update_password: on_create
+    group: "{{ chroot_group }}"
+- name: set chroot jail in sshd config
+  blockinfile:
+    path: /etc/ssh/sshd_config
+    block:
+      Match User "{{ chroot_user}}"
+      chrootDirectory "{{ chroot_home}}"
