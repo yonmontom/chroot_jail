@@ -20,7 +20,7 @@
     state: directory
     owner: root
     group: root
-    mode: u=rwx, g=rwx, o=rwx
+    mode: u=rwx,g=rwx,o=rwx
   with_items:
     - "{{ chroot_home }}"
     - "{{ chroot_home }}/etc/"
@@ -53,7 +53,7 @@
     src: "{{ item }}"
     dest: "{{ chroot_home }}/bin/"
     remote_src: yes
-    mode: u=rwx, g=rx, o=rx
+    mode: u=rwx,g=rx,o=rx
   with_items:
     - "{{ command_list }}"
 
@@ -64,7 +64,7 @@
     owner: root
     group: root
     remote_src: yes
-    mode: u=rwx, g=rwx, o=rwx
+    mode: u=rwx,g=rwx,o=rwx
   with_items:
     - "{{ centos6_libs }}"
   when:
@@ -77,7 +77,7 @@
     owner: root
     group: root
     remote_src: yes
-    mode: u=rwx, g=rwx, u=rwx
+    mode: u=rwx,g=rwx,u=rwx
   with_items:
     - "{{ centos7_libs }}"
   when:
@@ -88,7 +88,7 @@
     src: /etc/passwd
     dest: "{{ chroot_home }}/etc/"
     remote_src: yes
-    mode: u=rw, g=r, o=r
+    mode: u=rw,g=r,o=r
 
 - name: set chroot jail in sshd config
   blockinfile:
