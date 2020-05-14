@@ -9,7 +9,7 @@
     name: "{{ chroot_user }}"
     password:
     shell: /bin/bash
-    create_home: yes
+    home: "{{ chroot_home }}"
     state: present
     update_password: on_create
     group: "{{ chroot_group }}"
