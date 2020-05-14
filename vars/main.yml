@@ -4,6 +4,7 @@ chroot_user: cdlservice
 chroot_group: sm-jail
 
 command_list:
+  - /bin/bash
   - /bin/ls
   - /bin/grep
   - /bin/less
@@ -19,7 +20,6 @@ centos6_list:
   - /lib64/libpthred.so.0
   - /lib64/libattr.so.1
   - /lib64/libpcre.so.0
-
 
 centos7_list:
   - /lib64/libselinux.so.1

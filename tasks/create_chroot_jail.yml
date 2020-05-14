@@ -71,6 +71,11 @@
     - "{{ centos7_list }}"
   when:
     - (ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7")
+- name: copy passwd to chroot jail
+  copy:
+    src: /etc/passwd
+    dest: "{{ chroot_home }}/etc/"
+    remote_src: yes
 - name: set chroot jail in sshd config
   blockinfile:
     path: /etc/ssh/sshd_config
