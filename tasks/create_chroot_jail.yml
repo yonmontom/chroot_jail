@@ -30,24 +30,26 @@
     cmd: mknod -m 666 random c 1 8
 - name: copy command binaries to chroot folder.
   copy:
-    path: "{{ item }}"
+    src: "{{ item }}"
     dest: "{{ chroot_home }}/bin/"
+    remote_src: yes
   with_items:
     - "{{ command_list }}"
 - name: copy command libaries to chroot lib64 folder (centos 6)
   copy:
-    path: "{{ item }}"
+    src: "{{ item }}"
     dest: "{{ chroot_home }}/lib64/"
     state: present
     owner: "{{ chroot_user }}"
     group: "{{ chroot_group }}"
+    remote_src: yes
   with_items:
     - "{{ centos6_list }}"
   when:
     - (ansible_facts['distribrution'] == 'CentOS' and ansible_facts['distribution_major_version'] == '6')
 - name: copy command libaries to chroot lib64 folder (centos 6)
   copy:
-    path: "{{ item }}"
+    src: "{{ item }}"
     dest: "{{ chroot_home }}/lib64/"
     state: present
     owner: "{{ chroot_user }}"
