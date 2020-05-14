@@ -94,5 +94,5 @@
   blockinfile:
     path: /etc/ssh/sshd_config
     block:
-      Match Group "{{ chroot_group }}"
+      Match User "{{ chroot_user }}"
       chrootDirectory "{{ chroot_home }}"
