@@ -39,7 +39,6 @@
   copy:
     src: "{{ item }}"
     dest: "{{ chroot_home }}/lib64/"
-    state: present
     owner: "{{ chroot_user }}"
     group: "{{ chroot_group }}"
     remote_src: yes
@@ -51,9 +50,9 @@
   copy:
     src: "{{ item }}"
     dest: "{{ chroot_home }}/lib64/"
-    state: present
     owner: "{{ chroot_user }}"
     group: "{{ chroot_group }}"
+    remote_src: yes
   with_items:
     - "{{ centos7_list }}"
   when:
