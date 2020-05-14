@@ -46,7 +46,7 @@
   with_items:
     - "{{ centos6_list }}"
   when:
-    - {{ ansible_facts['ansible_distribrution'] }} == 'CentOS' and {{ ansible_facts['distribution_major_version'] }} == '6'
+    - "{{ ansible_facts['ansible_distribrution'] }}" == 'CentOS' and "{{ ansible_facts['distribution_major_version'] }}" == '6'
 - name: copy command libaries to chroot lib64 folder (centos 6)
   copy:
     src: "{{ item }}"
@@ -57,7 +57,7 @@
   with_items:
     - "{{ centos7_list }}"
   when:
-    - {{ ansible_facts['ansible_distribrution'] }} == 'CentOS' and {{ ansible_facts['distribution_major_version'] }} == '7'
+    - "{{ ansible_facts['ansible_distribrution'] }}" == 'CentOS' and "{{ ansible_facts['distribution_major_version'] }}" == '7'
 - name: create chroot group
   group:
     name: "{{ chroot_group }}"
