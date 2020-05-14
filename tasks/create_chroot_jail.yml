@@ -7,7 +7,7 @@
 - name: create chroot user
   user:
     name: "{{ chroot_user }}"
-    password:
+    password: test1234
     shell: /bin/bash
     home: "{{ chroot_home }}"
     state: present
