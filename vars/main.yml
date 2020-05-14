@@ -22,6 +22,9 @@ centos6_libs:
   - /lib64/libpcre.so.0
 
 centos7_libs:
+  - /lib64/libtinfo.so.5
+  - /lib64/libdl.so.2
+  - /lib64/libc.so.6
   - /lib64/libselinux.so.1
   - /lib64/libcap.so.2
   - /lib64/libacl.so.1
