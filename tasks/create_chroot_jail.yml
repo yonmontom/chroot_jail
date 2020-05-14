@@ -1,4 +1,18 @@
 ---
+- name: create chroot user
+  user:
+    name: "{{ chroot_user }}"
+    password:
+    shell: /bin/bash
+    create_home: yes
+    state: present
+    update_password: on_create
+    group: "{{ chroot_group }}"
+- name: create chroot group
+  group:
+    name: "{{ chroot_group }}"
+    state: present
+    system: yes
 - name: create chroot jail home directory and sub directories
   file:
     path: "{{ item }}"
@@ -57,20 +71,6 @@
     - "{{ centos7_list }}"
   when:
     - (ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7")
-- name: create chroot group
-  group:
-    name: "{{ chroot_group }}"
-    state: present
-    system: yes
-- name: create chroot user
-  user:
-    name: "{{ chroot_user }}"
-    password:
-    shell: /bin/bash
-    create_home: yes
-    state: present
-    update_password: on_create
-    group: "{{ chroot_group }}"
 - name: set chroot jail in sshd config
   blockinfile:
     path: /etc/ssh/sshd_config
