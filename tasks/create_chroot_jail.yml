@@ -20,7 +20,7 @@
     state: directory
     owner: root
     group: root
-    mode: u=rwx,g=rwx,o=rwx
+    mode: u=rwx
 
 - name: create chroot jail home directory and sub directories
   file:
