@@ -12,15 +12,22 @@
     - "{{ chroot_home }}/bin/"
     - "{{ chroot_home }}/lib64/"
     - "{{ chroot_home }}/dev/"
-- name: Run mknode commands for null, tty, zero and random
+- name: Run mknode commands for null
   command:
     chdir: "{{ chroot_home }}/dev/"
-    cmd: mknode -m 666 "{{ item }}"
-  with_items:
-    - null c 1 3
-    - tty c 5 0
-    - zero c 1 5
-    - random c 1 8
+    cmd: mknode -m 666 null c 1 4
+- name: Run mknode commands for tty
+  command:
+    chdir: "{{ chroot_home }}/dev/"
+    cmd: mknode -m 666 tty c 5 0
+- name: Run mknode commands for null
+  command:
+    chdir: "{{ chroot_home }}/dev/"
+    cmd: mknode -m 666 zero c 1 5
+- name: Run mknode commands for null
+  command:
+    chdir: "{{ chroot_home }}/dev/"
+    cmd: mknode -m 666 random c 1 8
 - name: copy command binaries to chroot folder.
   copy:
     path: "{{ item }}"
