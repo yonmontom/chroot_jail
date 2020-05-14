@@ -95,4 +95,4 @@
     path: /etc/ssh/sshd_config
     block:
       Match User {{ chroot_user }}
-      chrootDirectory "{{ chroot_home }}
+      chrootDirectory {{ chroot_home }}
