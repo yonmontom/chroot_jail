@@ -53,8 +53,8 @@
   copy:
     src: "{{ item }}"
     dest: "{{ chroot_home }}/lib64/"
-    owner: "{{ chroot_user }}"
-    group: "{{ chroot_group }}"
+    owner: root
+    group: root
     remote_src: yes
   with_items:
     - "{{ centos6_list }}"
@@ -64,8 +64,8 @@
   copy:
     src: "{{ item }}"
     dest: "{{ chroot_home }}/lib64/"
-    owner: "{{ chroot_user }}"
-    group: "{{ chroot_group }}"
+    owner: root
+    group: root
     remote_src: yes
   with_items:
     - "{{ centos7_list }}"
@@ -80,5 +80,5 @@
   blockinfile:
     path: /etc/ssh/sshd_config
     block:
-      Match User "{{ chroot_user}}"
-      chrootDirectory "{{ chroot_home}}"
+      Match Group "{{ chroot_group }}"
+      chrootDirectory "{{ chroot_home }}"
