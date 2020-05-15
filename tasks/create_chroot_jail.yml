@@ -71,7 +71,7 @@
     owner: root
     group: root
     remote_src: yes
-    mode: u=rwx,g=rwx,o=rwx
+    mode: u=rwx,g=rx,o=rx
   with_items:
     - "{{ centos6_libs }}"
   when:
@@ -84,7 +84,7 @@
     owner: root
     group: root
     remote_src: yes
-    mode: u=rwx,g=rwx,u=rwx
+    mode: u=rwx,g=rx,u=rx
   with_items:
     - "{{ centos7_libs }}"
   when:
