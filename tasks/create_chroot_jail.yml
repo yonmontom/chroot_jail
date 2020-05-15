@@ -100,6 +100,6 @@
 - name: set chroot jail in sshd config
   blockinfile:
     path: /etc/ssh/sshd_config
-    block:
+    block: |
       Match User {{ chroot_user }}
       chrootDirectory {{ chroot_home }}
