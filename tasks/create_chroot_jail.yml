@@ -35,22 +35,22 @@
     - "{{ chroot_home }}/lib64/"
     - "{{ chroot_home }}/dev/"
 
-- name: Run mknode commands for null
+- name: Run mknod commands for null
   command:
     chdir: "{{ chroot_home }}/dev/"
     cmd: mknod -m 666 null c 1 4
 
-- name: Run mknode commands for tty
+- name: Run mknod commands for tty
   command:
     chdir: "{{ chroot_home }}/dev/"
     cmd: mknod -m 666 tty c 5 0
 
-- name: Run mknode commands for null
+- name: Run mknod commands for null
   command:
     chdir: "{{ chroot_home }}/dev/"
     cmd: mknod -m 666 zero c 1 5
 
-- name: Run mknode commands for null
+- name: Run mknod commands for null
   command:
     chdir: "{{ chroot_home }}/dev/"
     cmd: mknod -m 666 random c 1 8
