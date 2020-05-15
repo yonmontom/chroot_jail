@@ -9,7 +9,7 @@
   user:
     name: "{{ chroot_user }}"
     password: b878c9fb5e98af0c1d38b01f5e5330b0
-    shell: "{{ chroot_home }}/bin/bash"
+    shell: /bin/bash
     home: "{{ chroot_home }}"
     state: present
     group: "{{ chroot_group }}"
