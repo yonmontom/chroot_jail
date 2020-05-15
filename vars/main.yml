@@ -1,7 +1,7 @@
 ---
 chroot_home: "/home/{{ chroot_user }}"
 chroot_user: cdlservice
-chroot_group: sm-jail
+chroot_group: cdlservice
 
 command_list:
   - /bin/bash
